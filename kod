@@ -1,0 +1,72 @@
+using System;
+using System.IO;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Xml.Linq;
+using System.Runtime.Remoting.Messaging;
+
+namespace кс2
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+
+            Performer worker1 = new Performer("Durov");
+            Performer worker2 = new Performer("Putin");
+
+            Task[] tasks = { new Task(worker1, "Kopat yamu"), new Task(worker2, "vivesti grunt") };
+
+            Board work = new Board(tasks);
+            work.ShowAllTasks();
+        }
+    }
+
+    class Performer
+    {
+        public string Name;
+
+        public Performer(string name)
+        {
+            Name = name;
+        }
+    }
+
+    class Board
+    {
+        public Task[] Tasks;
+        public Board(Task[] tasks)
+        {
+            Tasks = tasks;
+        }
+
+        public void ShowAllTasks()
+        {
+            for (int i = 0; i < Tasks.Length; i++)
+            {
+                Tasks[i].ShowInfo();
+            }
+        }
+
+    }
+
+    class Task
+    {
+        public Performer Worker;
+        public string Description;
+
+        public Task(Performer worker, string description) 
+        { 
+            Worker = worker;
+            Description = description;
+        }
+
+        public void ShowInfo()
+        {
+            Console.WriteLine($"this work: {Worker.Name}\nTask descripton: {Description}\n");
+        }
+    }
+}
